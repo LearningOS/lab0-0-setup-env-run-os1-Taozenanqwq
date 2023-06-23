@@ -7,8 +7,8 @@ OBJDUMP := rust-objdump --arch-name=riscv64
 OBJCOPY := rust-objcopy --binary-architecture=riscv64
 PY := python3
 
-BASE ?= 0
-CHAPTER ?= 0
+BASE ?= 2
+CHAPTER ?= 2
 TEST ?= $(CHAPTER)
 
 ifeq ($(TEST), 0) # No test, deprecated, previously used in v3

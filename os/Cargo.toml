@@ -10,3 +10,4 @@ debug = true
 
 [dependencies]
 log = "0.4"
+lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
