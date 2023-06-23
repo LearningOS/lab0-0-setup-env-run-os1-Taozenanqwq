@@ -46,19 +46,3 @@ pub fn rust_main() -> ! {
     trace!(".text [{:#x}, {:#x})", stext as usize, etext as usize);
     panic!("Shutdown machine!");
 }
-
-
-//cargo build --release 
-//丢弃源数据 rust-objcopy --strip-all target/riscv64gc-unknown-none-elf/release/os -O binary target/riscv64gc-unknown-none-elf/release/os.bin
-/* 启动QUME加载内核镜像 qemu-system-riscv64 \
-    -machine virt \
-    -nographic \
-    -bios ../bootloader/rustsbi-qemu.bin \
-    -device loader,file=target/riscv64gc-unknown-none-elf/release/os.bin,addr=0x80200000 \
-    -s -S 
-    */
-/* GDB连接QUME riscv64-unknown-elf-gdb \
-    -ex 'file target/riscv64gc-unknown-none-elf/release/os' \
-    -ex 'set arch riscv:rv64' \
-    -ex 'target remote localhost:1234'
-    */
