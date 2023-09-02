@@ -1,4 +1,4 @@
-use crate::batch::run_next_app;
+use crate::loader::run_next_app;
 
 pub fn sys_exit(exit_code: i32) -> ! {
     info!("[kernel] Application exited with code {}", exit_code);
