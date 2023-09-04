@@ -52,6 +52,7 @@ pub fn load_apps() {
     // load apps
     for i in 0..num_app {
         let base_i = get_base_i(i);
+        println!("base_i:{:#x}",base_i);
         // clear region
         (base_i..base_i + APP_SIZE_LIMIT).for_each(|addr| unsafe {
             (addr as *mut u8).write_volatile(0)
@@ -142,7 +143,7 @@ pub fn run_next_app() -> ! {
     let mut app_manager = APP_MANAGER.exclusive_access();
     let app_id = app_manager.get_current_app();
     app_manager.move_to_next_app();
-    println!("app_id:{}",app_id);
+    // println!("app_id:{}, base:{:#x}",app_id,get_base_i(app_id));
     drop(app_manager);
     // before this we have to drop local variables related to resources manually
     // and release the resources
