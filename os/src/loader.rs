@@ -142,6 +142,7 @@ pub fn run_next_app() -> ! {
     let mut app_manager = APP_MANAGER.exclusive_access();
     let app_id = app_manager.get_current_app();
     app_manager.move_to_next_app();
+    println!("app_id:{}",app_id);
     drop(app_manager);
     // before this we have to drop local variables related to resources manually
     // and release the resources
