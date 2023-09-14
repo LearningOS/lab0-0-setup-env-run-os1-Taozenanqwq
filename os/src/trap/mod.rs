@@ -1,6 +1,6 @@
 mod context;
 
-use crate::loader::run_next_app;
+use crate::task::exit_current_and_run_next;
 use crate::syscall::syscall;
 use riscv::register::{
     mtvec::TrapMode,
@@ -30,11 +30,11 @@ pub fn trap_handler(cx: &mut TrapContext) -> &mut TrapContext {
         }
         Trap::Exception(Exception::StoreFault) | Trap::Exception(Exception::StorePageFault) => {
             error!("[kernel] PageFault in application, core dumped.");
-            run_next_app();
+            exit_current_and_run_next();
         }
         Trap::Exception(Exception::IllegalInstruction) => {
             error!("[kernel] IllegalInstruction in application, core dumped.");
-            run_next_app();
+            exit_current_and_run_next();
         }
         _ => {
             panic!(

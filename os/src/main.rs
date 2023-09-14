@@ -18,6 +18,7 @@ mod trap;
 mod stack_trace;
 mod loader;
 mod config;
+mod task;
 
 core::arch::global_asm!(include_str!("entry.asm"));
 core::arch::global_asm!(include_str!("link_app.S"));
@@ -41,5 +42,6 @@ pub fn rust_main() -> ! {
     trap::init();
     load_apps();
     loader::init();
-    loader::run_next_app();
+    task::run_first_task();
+    panic!("Unreachable in rust_main!");
 }
