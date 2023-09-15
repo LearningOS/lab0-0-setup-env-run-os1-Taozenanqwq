@@ -1,11 +1,12 @@
 mod context;
 
-use crate::task::exit_current_and_run_next;
+use crate::task::{exit_current_and_run_next,suspend_current_and_run_next};
 use crate::syscall::syscall;
+use crate::timer::set_next_trigger;
 use riscv::register::{
     mtvec::TrapMode,
-    scause::{self, Exception, Trap},
-    stval, stvec,
+    scause::{self, Exception, Trap,Interrupt},
+    stval, stvec,sie
 };
 
 core::arch::global_asm!(include_str!("trap.S"));
@@ -36,6 +37,10 @@ pub fn trap_handler(cx: &mut TrapContext) -> &mut TrapContext {
             error!("[kernel] IllegalInstruction in application, core dumped.");
             exit_current_and_run_next();
         }
+        Trap::Interrupt(Interrupt::SupervisorTimer) => {
+            set_next_trigger();
+            suspend_current_and_run_next();
+        }
         _ => {
             panic!(
                 "Unsupported trap {:?}, stval = {:#x}!",
@@ -48,3 +53,8 @@ pub fn trap_handler(cx: &mut TrapContext) -> &mut TrapContext {
 }
 
 pub use context::TrapContext;
+
+
+pub fn enable_timer_interrupt() {
+    unsafe { sie::set_stimer(); }
+}

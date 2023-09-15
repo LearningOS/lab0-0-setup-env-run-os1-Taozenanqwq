@@ -80,7 +80,6 @@ fn get_base_i(app_id: usize) -> usize {
 
 struct AppManager {
     num_app: usize,
-    current_app: usize,
     app_start: [usize; MAX_APP_NUM + 1],
 }
 
@@ -112,7 +111,6 @@ lazy_static! {
             app_start[..=num_app].copy_from_slice(app_start_raw);
             AppManager {
                 num_app,
-                current_app: 0,
                 app_start,
             }
         })

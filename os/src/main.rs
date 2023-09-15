@@ -19,6 +19,7 @@ mod stack_trace;
 mod loader;
 mod config;
 mod task;
+mod timer;
 
 core::arch::global_asm!(include_str!("entry.asm"));
 core::arch::global_asm!(include_str!("link_app.S"));
@@ -42,6 +43,8 @@ pub fn rust_main() -> ! {
     trap::init();
     load_apps();
     loader::init();
+    trap::enable_timer_interrupt();
+    timer::set_next_trigger();
     task::run_first_task();
     panic!("Unreachable in rust_main!");
 }

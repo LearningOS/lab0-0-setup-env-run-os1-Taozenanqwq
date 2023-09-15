@@ -1,11 +1,12 @@
-mod task;
 mod context;
 mod switch;
+#[allow(clippy::module_inception)]
+mod task;
 
 use switch::__switch;
 use context::TaskContext;
 use crate::sync::UPSafeCell;
-use task::*;
+pub use task::{TaskControlBlock,TaskStatus,TaskManager,TaskManagerInner};
 use crate::loader::{get_num_app,init_app_cx};
 use crate::config::MAX_APP_NUM;
 use lazy_static::*;
